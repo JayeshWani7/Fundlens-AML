@@ -1,4 +1,4 @@
-from backend.db.neo4j import GraphDatabase
+from neo4j import GraphDatabase
 
 from backend.core.config import settings
 

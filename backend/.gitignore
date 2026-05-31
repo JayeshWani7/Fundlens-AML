@@ -39,3 +39,6 @@ build/
 
 # OS
 Thumbs.db
+# Python
+__pycache__/
+*.py[cod]
