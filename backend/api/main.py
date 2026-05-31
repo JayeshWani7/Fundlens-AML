@@ -67,6 +67,22 @@ app.include_router(query.router, prefix="/api/query", tags=["query"])
 app.include_router(score.router, prefix="/api/score", tags=["score"])
 
 
+@app.get("/api/debug")
+async def debug_info():
+    """Temporary endpoint to diagnose serverless environment issues."""
+    import os
+    return {
+        "env_vars_present": {
+            "NEO4J_URI": bool(os.getenv("NEO4J_URI")),
+            "NEO4J_USER": bool(os.getenv("NEO4J_USER")),
+            "NEO4J_PASSWORD": bool(os.getenv("NEO4J_PASSWORD")),
+            "POSTGRES_DSN": bool(os.getenv("POSTGRES_DSN")),
+            "REDIS_URL": bool(os.getenv("REDIS_URL")),
+        },
+        "python_version": __import__("sys").version,
+    }
+
+
 @app.get("/api/health")
 async def health_check():
     status = {"neo4j": False, "postgres": False, "redis": False}
