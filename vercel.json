@@ -2,6 +2,7 @@
   "version": 2,
   "functions": {
     "api/index.py": {
+      "runtime": "vercel-python@4.x",
       "memory": 1024,
       "maxDuration": 30
     }
@@ -9,10 +10,6 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    },
-    {
-      "src": "/ws/(.*)",
       "dest": "/api/index.py"
     },
     {
