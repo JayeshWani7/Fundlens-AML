@@ -1,33 +1,24 @@
 from contextlib import contextmanager
 
 import psycopg
-from psycopg_pool import ConnectionPool
 
 from backend.core.config import settings
-
-_pool: ConnectionPool | None = None
-
-
-def connect() -> None:
-    global _pool
-    if _pool is None:
-        _pool = ConnectionPool(conninfo=settings.postgres_dsn, min_size=1, max_size=5, open=True)
-        _ensure_schema()
-
-
-def close() -> None:
-    global _pool
-    if _pool is not None:
-        _pool.close()
-        _pool = None
 
 
 @contextmanager
 def get_conn():
-    if _pool is None:
-        connect()
-    with _pool.connection() as conn:
+    with psycopg.connect(settings.postgres_dsn) as conn:
         yield conn
+
+
+def connect() -> None:
+    # No-op for serverless — connections are made per-request
+    pass
+
+
+def close() -> None:
+    # No-op for serverless
+    pass
 
 
 def _ensure_schema() -> None:

@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "build": {
+    "env": {
+      "VITE_API_BASE_URL": "http://80.225.194.167:8001/api"
+    }
+  }
+}
