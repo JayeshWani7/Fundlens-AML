@@ -1,10 +1,12 @@
 import os
 from dataclasses import dataclass
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-
-load_dotenv()
+# Load backend/.env explicitly so it works regardless of working directory
+_env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(dotenv_path=_env_path, override=True)
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,7 @@ class Settings:
     gnn_score_url: str = os.getenv("GNN_SCORE_URL", "http://gnn:8001/score")
 
     alerts_channel: str = os.getenv("ALERTS_CHANNEL", "alerts")
+    cors_origins: str = os.getenv("CORS_ORIGINS", "http://localhost:5173")
 
 
 settings = Settings()
